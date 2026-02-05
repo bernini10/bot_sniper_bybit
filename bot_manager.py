@@ -89,31 +89,47 @@ def start_telegram_control():
     log(f"Telegram Control iniciado (PID: {proc.pid})")
     return proc
 
+def start_dashboard():
+    """Inicia o Dashboard Web"""
+    log("Iniciando Dashboard Server...")
+    # Usa nohup simulado via subprocess para garantir persistencia
+    # E redireciona output para log dedicado
+    with open(os.path.join(BASE_DIR, "dashboard.log"), "a") as out:
+        proc = subprocess.Popen(
+            [sys.executable, os.path.join(BASE_DIR, "dashboard_server.py")],
+            stdout=out,
+            stderr=out,
+            cwd=BASE_DIR
+        )
+    log(f"Dashboard iniciado (PID: {proc.pid})")
+    return proc
+
 def start_all():
     """Inicia todos os componentes"""
     log("=" * 50)
     log("INICIANDO BOT SNIPER BYBIT")
     log("=" * 50)
     
-    # Mata processos existentes
     kill_process_by_name("bot_scanner.py")
     kill_process_by_name("bot_monitor.py")
     kill_process_by_name("bot_executor.py")
     kill_process_by_name("bot_telegram_control.py")
+    kill_process_by_name("dashboard_server.py")
     time.sleep(2)
     
-    # Inicia componentes
     scanner_proc = start_scanner()
     monitor_proc = start_monitor()
     telegram_proc = start_telegram_control()
+    dash_proc = start_dashboard()
     
     log("Todos os componentes iniciados")
     log("Scanner: Monitorando e populando watchlist")
     log("Monitor: Validando padrões e disparando executores")
     log("Telegram: Centro de Comando Online")
+    log("Dashboard: Web Server rodando na porta 8080")
     log("=" * 50)
     
-    return scanner_proc, monitor_proc, telegram_proc
+    return scanner_proc, monitor_proc, telegram_proc, dash_proc
 
 def stop_all():
     """Para todos os componentes"""
@@ -125,6 +141,7 @@ def stop_all():
     kill_process_by_name("bot_monitor.py")
     kill_process_by_name("bot_executor.py")
     kill_process_by_name("bot_telegram_control.py")
+    kill_process_by_name("dashboard_server.py")
     
     log("Todos os componentes parados")
     log("=" * 50)
@@ -135,6 +152,7 @@ def status():
     monitor_pids = get_process_by_name("bot_monitor.py")
     executor_pids = get_process_by_name("bot_executor.py")
     telegram_pids = get_process_by_name("bot_telegram_control.py")
+    dash_pids = get_process_by_name("dashboard_server.py")
     
     log("=" * 50)
     log("STATUS DO BOT SNIPER BYBIT")
@@ -142,6 +160,7 @@ def status():
     log(f"Scanner: {'ATIVO' if scanner_pids else 'PARADO'} (PIDs: {scanner_pids})")
     log(f"Monitor: {'ATIVO' if monitor_pids else 'PARADO'} (PIDs: {monitor_pids})")
     log(f"Telegram: {'ATIVO' if telegram_pids else 'PARADO'} (PIDs: {telegram_pids})")
+    log(f"Dashboard: {'ATIVO' if dash_pids else 'PARADO'} (PIDs: {dash_pids})")
     log(f"Executores: {'ATIVOS' if executor_pids else 'PARADOS'} (Qtd: {len(executor_pids)})")
     
     # Verifica watchlist
