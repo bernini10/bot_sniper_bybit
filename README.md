@@ -271,7 +271,7 @@ Proprietary - Uso restrito ao desenvolvedor e clientes autorizados.
 ## 📧 Contato
 
 **Severino AI**  
-Email: bernini10@gmail.com  
+Email: contato@liquidation-bot.app  
 GitHub: [@bernini10](https://github.com/bernini10)
 
 ---
