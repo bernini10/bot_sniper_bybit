@@ -51,7 +51,6 @@ venv/
 .vscode/
 
 # Arquivos de teste temporários
-test_*.py
 debug_*.py
 *_test.sh
 *_flow.sh
