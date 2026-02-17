@@ -1,0 +1,12 @@
+# Brain System Requirements
+# Essenciais (já devem estar instalados)
+# numpy
+# pandas
+# scikit-learn
+
+# Para Q-Learning avançado
+# (instaláveis via pip se necessário)
+# pickle (built-in)
+# collections (built-in)
+# random (built-in)
+# math (built-in)

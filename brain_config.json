@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "model": {
+    "type": "q_learning",
+    "alpha": 0.1,
+    "gamma": 0.9,
+    "epsilon": 0.3,
+    "epsilon_decay": 0.995,
+    "min_epsilon": 0.01
+  },
+  "training": {
+    "episodes_per_cycle": 10,
+    "batch_size": 32,
+    "memory_size": 10000,
+    "continuous_learning_interval_minutes": 60
+  },
+  "rewards": {
+    "profit_weight": 1.0,
+    "duration_penalty": 0.5,
+    "drawdown_penalty": 2.0,
+    "quick_win_bonus": 1.0
+  },
+  "integration": {
+    "decision_threshold": 0.6,
+    "fallback_to_ai": true,
+    "log_decisions": true,
+    "auto_train_on_trade": true
+  }
+}

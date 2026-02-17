@@ -25,20 +25,6 @@ except Exception:
     bot = None
     pass
 
-# Tenta importar Brain Integration (NOVO)
-try:
-    from brain_integration import BrainIntegration
-    BRAIN_AVAILABLE = True
-    brain = BrainIntegration()
-    brain_initialized = brain.initialize()
-    if brain_initialized:
-        logging.info("🧠 Brain Integration inicializado com sucesso")
-    else:
-        logging.warning("⚠️ Brain Integration em modo fallback")
-except Exception as e:
-    BRAIN_AVAILABLE = False
-    logging.warning(f"⚠️ Brain Integration não disponível: {e}")
-
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -172,48 +158,8 @@ def disparar_trade(wl_data, index, preco_atual):
     except Exception as e:
         logger.error(f"Erro ao disparar executor para {symbol}: {e}")
 
-def consultar_brain_para_decisao(par, preco_atual):
-    """
-    NOVO: Consulta o cérebro para decisão de entrada
-    Retorna: (deve_entrar: bool, motivo: str, brain_data: dict)
-    """
-    if not BRAIN_AVAILABLE or not brain_initialized:
-        # Fallback: sempre entra se gatilho acionado
-        return True, "Brain não disponível - usando fallback", {}
-    
-    try:
-        # Preparar dados para o brain
-        pattern_data = {
-            'symbol': par['symbol'],
-            'timeframe': par['timeframe'],
-            'pattern': par['padrao'],
-            'direction': par['direcao'],
-            'ai_confidence': par.get('ai_confidence', 0.5),
-            'neckline': par['neckline'],
-            'stop_loss': par['stop_loss'],
-            'target': par['target'],
-            'current_price': preco_atual
-        }
-        
-        # Consultar brain
-        brain_decision = brain.should_enter_trade(pattern_data)
-        
-        # Registrar decisão no par
-        par['brain_decision'] = brain_decision
-        
-        # Decidir baseado no brain
-        if brain_decision['decision'] == 'ENTER':
-            return True, f"Brain APROVOU: {brain_decision['reason']}", brain_decision
-        else:
-            return False, f"Brain REJEITOU: {brain_decision['reason']}", brain_decision
-            
-    except Exception as e:
-        logger.error(f"❌ Erro ao consultar brain: {e}")
-        # Fallback seguro: não entra se brain falhar
-        return False, f"Erro no brain: {str(e)}", {}
-
 def monitorar_watchlist():
-    logger.info(">>> Monitor de Watchlist Iniciado v2.4.0 (IA + BRAIN) <<<")
+    logger.info(">>> Monitor de Watchlist Iniciado v2.3.1 (IA Ativa) <<<")
     exchange = get_bybit_public()
     
     # Controle de validação IA para não chamar toda hora
@@ -281,24 +227,8 @@ def monitorar_watchlist():
                         break # Reinicia loop pois lista mudou
 
                     if acionar_gatilho:
-                        # NOVO: CONSULTAR BRAIN ANTES DE ENTRAR
-                        deve_entrar, motivo, brain_data = consultar_brain_para_decisao(par, preco_atual)
-                        
-                        if deve_entrar:
-                            disparar_trade(wl, real_idx, preco_atual)
-                            logger.info(f"🧠 {motivo}")
-                            
-                            # Atualizar par com decisão do brain
-                            wl['pares'][real_idx]['brain_decision'] = brain_data
-                            watchlist_mgr.write(wl)
-                        else:
-                            logger.info(f"🧠 {motivo}")
-                            # Opcional: remover do watchlist se brain rejeitar
-                            # remove_par_watchlist(wl, real_idx, motivo, symbol, padrao_nome, timeframe)
-                            # restart_loop = True
-                            # break
-                        
-                        continue # Vai pro proximo, esse já foi processado
+                        disparar_trade(wl, real_idx, preco_atual)
+                        continue # Vai pro proximo, esse ja disparou
 
                 except Exception as e:
                     logger.error(f"Erro ao checar preço {symbol}: {e}")

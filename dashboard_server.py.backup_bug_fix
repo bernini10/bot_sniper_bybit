@@ -391,7 +391,7 @@ def get_detailed_trades():
                 {
                     'symbol': pos.get('symbol', ''),
                     'symbol_clean': pos.get('symbol', '').replace('/USDT:USDT', '').replace('/USDT', ''),
-                    'side': 'LONG' if pos.get('side', '').lower() == 'buy' else 'SHORT',
+                    'side': 'LONG' if safe_float(pos.get('contracts')) > 0 else 'SHORT',
                     'size': abs(safe_float(pos.get('contracts'))),
                     'entry_price': safe_float(pos.get('entryPrice')),
                     'current_price': safe_float(pos.get('markPrice')),

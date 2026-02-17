@@ -1,0 +1,49 @@
+//@version=5
+indicator("BTC.D Monitor - Severino DEBUG", overlay=false)
+
+// CONFIG 
+UPDATE_FREQ = input.string("1min", "Freq", options=["1min", "5min", "15min", "30min", "1h"])
+SEND_ON_CHANGE = input.bool(true, "Só se mudar >0.3%")
+
+// DADOS BTC.D
+btcDom = request.security("CRYPTOCAP:BTC.D", timeframe.period, close)
+sma20 = ta.sma(btcDom, 20)
+direction = btcDom > sma20 ? "LONG" : "SHORT"
+change_pct = ((btcDom - btcDom[1]) / btcDom[1]) * 100
+
+// LÓGICA ALERTA
+is_candle_close = barstate.isconfirmed
+significant_change = math.abs(change_pct) >= 0.3
+should_alert = is_candle_close and (not SEND_ON_CHANGE or significant_change)
+
+// FORMATAR JSON
+btcDomStr = str.tostring(btcDom, "#.##")
+changeStr = str.tostring(change_pct, "#.##")
+jsonMessage = '{"btc_d_value": ' + btcDomStr + ', "direction": "' + direction + '", "change_pct": ' + changeStr + '}'
+
+// DEBUG: Mostrar valores
+plotshape(should_alert, "ALERT TRIGGER", shape.triangleup, location.bottom, color=color.green, size=size.small)
+plotchar(is_candle_close, "CANDLE CLOSE", "•", location.top, color=color.blue, size=size.tiny)
+plotchar(significant_change, "SIG CHANGE", "▲", location.top, color=color.red, size=size.tiny)
+
+// ALERTA
+if should_alert
+    alert(jsonMessage, alert.freq_once_per_bar_close)
+
+// PLOTS
+plot(btcDom, "BTC.D", color.orange, 2)
+plot(sma20, "SMA20", color.blue, 1)
+bgcolor(direction == "LONG" ? color.new(color.red, 90) : color.new(color.green, 90))
+
+// LABEL SIMPLES - SEM ERROS
+var label infoLabel = na
+if barstate.islast
+    label.delete(infoLabel)
+    infoLabel := label.new(bar_index, btcDom, 
+         "BTC.D: " + btcDomStr + "% " + direction + 
+         "\nChange: " + changeStr + "%" +
+         "\nAlert: " + (should_alert ? "YES" : "NO") +
+         "\nCandle Close: " + (is_candle_close ? "YES" : "NO") +
+         "\nSig Change: " + (significant_change ? "YES" : "NO"),
+         yloc=yloc.price, style=label.style_label_left, 
+         color=color.black, textcolor=color.white, size=size.small)
