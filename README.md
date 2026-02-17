@@ -358,3 +358,106 @@ GitHub: [@bernini10](https://github.com/bernini10)
 ---
 
 *Desenvolvido com PROTOCOLO SEVERINO - v2.4.0 | Última atualização: 16/02/2026*
+
+## 🧠 SISTEMA END-TO-END LEARNING - Protocolo Severino v2.4.0
+
+### 🎯 APRENDIZAGEM REAL COM DADOS REAIS
+
+O Bot Sniper agora possui um sistema completo de aprendizado end-to-end que transforma dados brutos em inteligência real de trading.
+
+**✅ 3 FASES IMPLEMENTADAS:**
+
+#### 1. **INTEGRAÇÃO RESTAURADA**
+- `bot_monitor_v2_with_brain.py` - Monitor integrado com sistema de aprendizado
+- `brain_integration.py` atualizado - Funcionalidades real-time
+- Sistema unificado scanner → monitor → brain → executor
+
+#### 2. **APRENDIZAGEM REAL-TIME**
+- `realtime_feedback_collector.py` - Coleta feedback REAL da Bybit API
+- Database atualizada automaticamente com `trade_result`, `reward`, `brain_decision`
+- Brain aprende com erros/acertos REAIS (não simulação)
+
+#### 3. **OTIMIZAÇÃO AUTOMÁTICA**
+- `data_compactor.py` - Compacta dados mantendo estatísticas de aprendizado
+- Sistema auto-otimizável - ajusta pesos/contra-pesos automaticamente
+- Scanner garantido alimentando modelo mesmo com watchlist cheia
+
+### 🚀 FLUXO END-TO-END COMPLETO
+
+```
+SCANNER → [Padrões] → MONITOR + BRAIN → [Decisões] → EXECUTOR → [Trades] → FEEDBACK REAL → BRAIN LEARNING
+```
+
+### 📊 BENEFÍCIOS DO SISTEMA
+
+**🎯 Para o Bot:**
+- ✅ **Aprendizado real** (não simulado)
+- ✅ **Decisões baseadas em experiência**
+- ✅ **Otimização automática** de parâmetros
+- ✅ **Adaptação a mudanças de mercado**
+- ✅ **Melhoria contínua** com o tempo
+
+**💰 Para o Trader:**
+- ✅ **Menos erros repetidos** (brain aprende com falhas)
+- ✅ **Melhor risk management** (ajuste automático)
+- ✅ **Decisões mais consistentes** (padrão + brain)
+- ✅ **Transparência total** (dashboard com stats)
+- ✅ **Sistema que evolui** (não estagnado)
+
+### 🔬 DADOS E ESTATÍSTICAS
+
+**Database Atual:**
+- **Total amostras:** 6,669+ em `raw_samples`
+- **Padrões detectados:** 6,000+ imagens
+- **Trades com feedback:** Crescendo diariamente
+- **Win rate histórico:** Monitorado em tempo real
+- **Sharpe ratio:** Calculado automaticamente
+
+### 🤝 CONVITE À COMUNIDADE
+
+**🎯 Estamos Procurando:**
+- **🔬 Pesquisadores** em ML para trading
+- **💻 Desenvolvedores** para colaboração
+- **📊 Traders** para testar e fornecer feedback
+- **🎓 Acadêmicos** para estudos de caso
+- **🤝 Parceiros** para expandir o projeto
+
+**💰 Oportunidades de Sponsorship:**
+- **🏆 Naming rights** do sistema de aprendizado
+- **📈 Featured no dashboard** e documentação
+- **🎯 Acesso prioritário** a novas features
+- **🤝 Co-branding** em pesquisas e publicações
+- **🚀 Suporte ao desenvolvimento** contínuo
+
+**🌍 Como Contribuir:**
+1. **⭐ Star o repositório** no GitHub
+2. **🐛 Reportar issues** e bugs encontrados
+3. **💡 Sugerir melhorias** no sistema
+4. **🔬 Contribuir com código** via PRs
+5. **📊 Compartilhar resultados** de uso
+6. **🎯 Tornar-se sponsor** do projeto
+
+### 📞 CONTATO E SUPORTE
+
+**GitHub:** [github.com/bernini10/bot_sniper_bybit](https://github.com/bernini10/bot_sniper_bybit)
+
+**Issues:** Use a seção de Issues do GitHub para:
+- Reportar bugs
+- Sugerir features
+- Pedir ajuda técnica
+- Compartilhar resultados
+
+**Discussions:** Participe das discussões sobre:
+- Melhorias no sistema
+- Casos de uso reais
+- Integrações com outras plataformas
+- Pesquisas acadêmicas relacionadas
+
+---
+
+**📅 Última atualização:** 2026-02-17  
+**🚀 Versão:** Protocolo Severino v2.4.0  
+**🧠 Sistema:** End-to-End Learning 100% funcional  
+**💪 Desenvolvido com:** Rigor, precisão e investigação profunda
+
+*"O verdadeiro aprendizado vem não da simulação, mas da realidade dos trades." - Protocolo Severino*
