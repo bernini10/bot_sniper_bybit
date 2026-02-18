@@ -3,125 +3,261 @@
   "slots_ocupados": 10,
   "pares": [
     {
-      "symbol": "ADA/USDT",
-      "timeframe": "15m",
-      "padrao": "TOPO_DUPLO",
-      "direcao": "SHORT",
-      "status": "EM_FORMACAO",
-      "confiabilidade": 0.7583705839942322,
-      "neckline": 0.272,
-      "target": 0.26660000000000006,
-      "stop_loss": 0.280174,
-      "timestamp_descoberta": 1771031972
-    },
-    {
-      "symbol": "DOT/USDT",
-      "timeframe": "15m",
-      "padrao": "TOPO_DUPLO",
-      "direcao": "SHORT",
-      "status": "EM_FORMACAO",
-      "confiabilidade": 0.7637278106508875,
-      "neckline": 1.326,
-      "target": 1.3,
-      "stop_loss": 1.36552,
-      "timestamp_descoberta": 1771032110
-    },
-    {
-      "symbol": "FIL/USDT",
-      "timeframe": "15m",
-      "padrao": "TOPO_DUPLO",
-      "direcao": "SHORT",
-      "status": "EM_FORMACAO",
-      "confiabilidade": 0.7738271604938272,
-      "neckline": 0.947,
-      "target": 0.9249999999999999,
-      "stop_loss": 0.97869,
-      "timestamp_descoberta": 1771033023
-    },
-    {
-      "symbol": "GRT/USDT",
-      "timeframe": "15m",
-      "padrao": "TOPO_DUPLO",
-      "direcao": "SHORT",
-      "status": "EM_FORMACAO",
-      "confiabilidade": 0.7657295754548699,
-      "neckline": 0.02753,
-      "target": 0.02703,
-      "stop_loss": 0.0283103,
-      "timestamp_descoberta": 1771033292
-    },
-    {
-      "symbol": "BCH/USDT",
-      "timeframe": "1h",
-      "padrao": "CUNHA_ASCENDENTE",
-      "direcao": "SHORT",
-      "status": "EM_FORMACAO",
-      "confiabilidade": 0.7231715312146528,
-      "neckline": 494.1,
-      "target": 455.65000000000003,
-      "stop_loss": 579.5649999999999,
-      "timestamp_descoberta": 1771033519
-    },
-    {
-      "symbol": "LINK/USDT",
-      "timeframe": "1h",
-      "padrao": "OCO",
-      "direcao": "SHORT",
-      "status": "EM_FORMACAO",
-      "confiabilidade": 0.8063779527559055,
-      "neckline": 8.39,
-      "target": 7.860000000000001,
-      "stop_loss": 9.023349999999999,
-      "timestamp_descoberta": 1771033764
-    },
-    {
-      "symbol": "HBAR/USDT",
-      "timeframe": "15m",
-      "padrao": "CUNHA_ASCENDENTE",
-      "direcao": "SHORT",
-      "status": "EM_FORMACAO",
-      "confiabilidade": 0.7441222870376103,
-      "neckline": 0.09156,
-      "target": 0.083515,
-      "stop_loss": 0.10926474999999998,
-      "timestamp_descoberta": 1771035149
-    },
-    {
-      "symbol": "QNT/USDT",
-      "timeframe": "15m",
-      "padrao": "TOPO_DUPLO",
-      "direcao": "SHORT",
-      "status": "EM_FORMACAO",
-      "confiabilidade": 0.7600701754385967,
-      "neckline": 70.08,
-      "target": 68.91,
-      "stop_loss": 71.9625,
-      "timestamp_descoberta": 1771036604
-    },
-    {
       "symbol": "XLM/USDT",
       "timeframe": "15m",
       "padrao": "TRIANGULO_ASCENDENTE",
       "direcao": "LONG",
-      "status": "EM_FORMACAO",
+      "status": "EXECUTANDO",
       "confiabilidade": 0.8352631578947368,
       "neckline": 0.1672,
       "target": 0.16984,
       "stop_loss": 0.162261,
-      "timestamp_descoberta": 1771036652
+      "timestamp_descoberta": 1771036652,
+      "brain_decision": {
+        "decision": "ENTER",
+        "confidence": 0.5,
+        "reason": "Brain recomendou ENTER_LONG (conf: 0.50)",
+        "brain_advice": "ENTER_LONG",
+        "state_features": {
+          "pattern": "TRIANGULO_ASCENDENTE",
+          "timeframe": "15m",
+          "direction": "LONG",
+          "ai_confidence": 0.5,
+          "symbol": "XLM/USDT",
+          "market_scenario": 2,
+          "btc_trend": "SHORT",
+          "btcd_trend": "LONG",
+          "btcd_source": "webhook"
+        }
+      }
+    },
+    {
+      "symbol": "SOL/USDT",
+      "timeframe": "1h",
+      "padrao": "TOPO_DUPLO",
+      "direcao": "SHORT",
+      "status": "EXECUTANDO",
+      "confiabilidade": 0.7744783158863452,
+      "neckline": 83.87,
+      "target": 80.81,
+      "stop_loss": 87.7993,
+      "timestamp_descoberta": 1771253151,
+      "brain_decision": {
+        "decision": "ENTER",
+        "confidence": 0.5,
+        "reason": "Brain recomendou ENTER_SHORT (conf: 0.50)",
+        "brain_advice": "ENTER_SHORT",
+        "state_features": {
+          "pattern": "TOPO_DUPLO",
+          "timeframe": "1h",
+          "direction": "SHORT",
+          "ai_confidence": 0.5,
+          "symbol": "SOL/USDT",
+          "market_scenario": 5,
+          "btc_trend": "SHORT",
+          "btcd_trend": "NEUTRAL",
+          "btcd_source": "proxy"
+        }
+      }
     },
     {
       "symbol": "SAND/USDT",
+      "timeframe": "30m",
+      "padrao": "OCO",
+      "direcao": "SHORT",
+      "status": "EXECUTANDO",
+      "confiabilidade": 0.8288623435722411,
+      "neckline": 0.0867,
+      "target": 0.08499999999999999,
+      "stop_loss": 0.0890155,
+      "timestamp_descoberta": 1771253184,
+      "brain_decision": {
+        "decision": "ENTER",
+        "confidence": 0.5,
+        "reason": "Brain recomendou ENTER_SHORT (conf: 0.50)",
+        "brain_advice": "ENTER_SHORT",
+        "state_features": {
+          "pattern": "OCO",
+          "timeframe": "30m",
+          "direction": "SHORT",
+          "ai_confidence": 0.5,
+          "symbol": "SAND/USDT",
+          "market_scenario": 5,
+          "btc_trend": "SHORT",
+          "btcd_trend": "NEUTRAL",
+          "btcd_source": "proxy"
+        }
+      }
+    },
+    {
+      "symbol": "HBAR/USDT",
       "timeframe": "15m",
-      "padrao": "BANDEIRA_ALTA",
+      "padrao": "OCO",
+      "direcao": "SHORT",
+      "status": "EXECUTANDO",
+      "confiabilidade": 0.8268648966395611,
+      "neckline": 0.09973,
+      "target": 0.09672,
+      "stop_loss": 0.10295145,
+      "timestamp_descoberta": 1771254892,
+      "brain_decision": {
+        "decision": "ENTER",
+        "confidence": 0.5,
+        "reason": "Brain recomendou ENTER_SHORT (conf: 0.50)",
+        "brain_advice": "ENTER_SHORT",
+        "state_features": {
+          "pattern": "OCO",
+          "timeframe": "15m",
+          "direction": "SHORT",
+          "ai_confidence": 0.5,
+          "symbol": "HBAR/USDT",
+          "market_scenario": 5,
+          "btc_trend": "SHORT",
+          "btcd_trend": "NEUTRAL",
+          "btcd_source": "proxy"
+        }
+      }
+    },
+    {
+      "symbol": "LDO/USDT",
+      "timeframe": "15m",
+      "padrao": "OCO_INVERTIDO",
+      "direcao": "LONG",
+      "status": "EXECUTANDO",
+      "confiabilidade": 0.8282164090368609,
+      "neckline": 0.3414,
+      "target": 0.3504,
+      "stop_loss": 0.331354,
+      "timestamp_descoberta": 1771269296,
+      "brain_decision": {
+        "decision": "ENTER",
+        "confidence": 0.5,
+        "reason": "Brain recomendou ENTER_LONG (conf: 0.50)",
+        "brain_advice": "ENTER_LONG",
+        "state_features": {
+          "pattern": "OCO_INVERTIDO",
+          "timeframe": "15m",
+          "direction": "LONG",
+          "ai_confidence": 0.5,
+          "symbol": "LDO/USDT",
+          "market_scenario": 5,
+          "btc_trend": "SHORT",
+          "btcd_trend": "NEUTRAL",
+          "btcd_source": "proxy"
+        }
+      }
+    },
+    {
+      "symbol": "ATOM/USDT",
+      "timeframe": "1h",
+      "padrao": "FUNDO_DUPLO",
+      "direcao": "LONG",
+      "status": "EXECUTANDO",
+      "confiabilidade": 0.7319408502772643,
+      "neckline": 2.258,
+      "target": 2.404,
+      "stop_loss": 2.0908800000000003,
+      "timestamp_descoberta": 1771273873,
+      "brain_decision": {
+        "decision": "ENTER",
+        "confidence": 0.5,
+        "reason": "Brain recomendou ENTER_LONG (conf: 0.50)",
+        "brain_advice": "ENTER_LONG",
+        "state_features": {
+          "pattern": "FUNDO_DUPLO",
+          "timeframe": "1h",
+          "direction": "LONG",
+          "ai_confidence": 0.5,
+          "symbol": "ATOM/USDT",
+          "market_scenario": 4,
+          "btc_trend": "SHORT",
+          "btcd_trend": "SHORT",
+          "btcd_source": "proxy"
+        }
+      }
+    },
+    {
+      "symbol": "VET/USDT",
+      "timeframe": "15m",
+      "padrao": "OCO_INVERTIDO",
+      "direcao": "LONG",
+      "status": "EXECUTANDO",
+      "confiabilidade": 0.8293917274939172,
+      "neckline": 0.00833,
+      "target": 0.008560000000000002,
+      "stop_loss": 0.00808685,
+      "timestamp_descoberta": 1771275867,
+      "brain_decision": {
+        "decision": "ENTER",
+        "confidence": 0.5,
+        "reason": "Brain recomendou ENTER_LONG (conf: 0.50)",
+        "brain_advice": "ENTER_LONG",
+        "state_features": {
+          "pattern": "OCO_INVERTIDO",
+          "timeframe": "15m",
+          "direction": "LONG",
+          "ai_confidence": 0.5,
+          "symbol": "VET/USDT",
+          "market_scenario": 4,
+          "btc_trend": "SHORT",
+          "btcd_trend": "SHORT",
+          "btcd_source": "proxy"
+        }
+      }
+    },
+    {
+      "symbol": "POL/USDT",
+      "timeframe": "1h",
+      "padrao": "FUNDO_DUPLO",
+      "direcao": "LONG",
+      "status": "EXECUTANDO",
+      "confiabilidade": 0.7573156899810963,
+      "neckline": 0.1084,
+      "target": 0.1122,
+      "stop_loss": 0.103554,
+      "timestamp_descoberta": 1771281057,
+      "brain_decision": {
+        "decision": "ENTER",
+        "confidence": 0.5,
+        "reason": "Brain recomendou ENTER_LONG (conf: 0.50)",
+        "brain_advice": "ENTER_LONG",
+        "state_features": {
+          "pattern": "FUNDO_DUPLO",
+          "timeframe": "1h",
+          "direction": "LONG",
+          "ai_confidence": 0.5,
+          "symbol": "POL/USDT",
+          "market_scenario": 4,
+          "btc_trend": "SHORT",
+          "btcd_trend": "SHORT",
+          "btcd_source": "proxy"
+        }
+      }
+    },
+    {
+      "symbol": "XRP/USDT",
+      "timeframe": "15m",
+      "padrao": "OCO",
+      "direcao": "SHORT",
+      "status": "EM_FORMACAO",
+      "confiabilidade": 0.8294967793880836,
+      "neckline": 1.4781,
+      "target": 1.4624,
+      "stop_loss": 1.5127559999999998,
+      "timestamp_descoberta": 1771297948
+    },
+    {
+      "symbol": "OP/USDT",
+      "timeframe": "15m",
+      "padrao": "OCO_INVERTIDO",
       "direcao": "LONG",
       "status": "EM_FORMACAO",
-      "confiabilidade": 0.7452643948296122,
-      "neckline": 0.0903,
-      "target": 0.09378,
-      "stop_loss": 0.08751600000000001,
-      "timestamp_descoberta": 1771037362
+      "confiabilidade": 0.8276303317535544,
+      "neckline": 0.1908,
+      "target": 0.19419999999999998,
+      "stop_loss": 0.186165,
+      "timestamp_descoberta": 1771299190
     }
   ],
-  "updated_at": "2026-02-14 02:49:22.615458"
+  "updated_at": "2026-02-17 03:33:10.395380"
 }

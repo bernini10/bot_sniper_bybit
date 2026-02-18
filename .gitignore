@@ -1,11 +1,44 @@
-*.log
-*.db
-brain_images/
-__pycache__/
-venv/
+# Credenciais e configurações sensíveis
 .env
-segredos.json
-*.backup*
+.env.*
+*.env
+config.json
+secrets.json
+credentials.json
+
+# Backups
+*.backup
+*.bak
 *.old
-*.patch
-*.before_debug
+*.orig
+
+# Logs
+*.log
+logs/
+brain_logs/
+
+# Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Banco de dados
+*.db
+*.sqlite
+*.sqlite3
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporários
+tmp/
+temp/

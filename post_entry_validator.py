@@ -1,22 +1,14 @@
 """
 Validador Pós-Entrada com Vision AI - Bot Sniper
-Severino - 2026-02-12
+Severino - 2026-02-14
+
+ATUALIZACAO v2.3.1:
+- Aumento de Threshold de Invalidação: 0.70 -> 0.85
+- Lógica de Confirmação Dupla: Exige 2 candles consecutivos INVALID para fechar.
+- Tolerância a Pullbacks: Prompt ajustado.
 
 A cada fechamento de candle, gera imagem atualizada do gráfico e envia para
 Gemini Vision AI validar se o padrão continua válido.
-
-Regras mantidas:
-  - SL na corretora como safety net (nunca removido)
-  - Break-even (gerenciado no executor)
-  
-Regras removidas:
-  - Movimento adverso 0.3% (muito restritivo)
-  - Sem progresso após X minutos (redundante com IA)
-
-Nova regra:
-  - Vision AI valida padrão no fechamento de cada candle
-  - Se INVALID com confidence > 0.7 → fecha posição
-  - Se API falhar → alerta Telegram + log + mantém posição (SL protege)
 """
 
 import ccxt
@@ -106,14 +98,17 @@ class PostEntryValidator:
         self.consecutive_api_failures = 0
         self.MAX_CONSECUTIVE_FAILURES = 3  # Alerta após 3 falhas seguidas
 
-        # Confidence threshold para fechar
-        self.INVALID_CONFIDENCE_THRESHOLD = 0.7
+        # Confidence threshold para fechar (AUMENTADO v2.3.1)
+        self.INVALID_CONFIDENCE_THRESHOLD = 0.85
+        
+        # Controle de Confirmação Dupla (v2.3.1)
+        self.consecutive_invalid_candles = 0
+        self.REQUIRED_INVALID_CANDLES = 2
 
         # Configurar Gemini
         self._setup_gemini()
 
-        logger.info(f"👁️ Vision PostValidator inicializado: {symbol} | TF: {timeframe} | "
-                     f"Side: {side} | Entry: {entry_price}")
+        logger.info(f"👁️ Vision PostValidator v2.3.1 (Tolerante) inicializado: {symbol} | TF: {timeframe}")
 
     def _setup_gemini(self):
         """Configura o modelo Gemini"""
@@ -225,13 +220,15 @@ CRITÉRIOS PARA MANTER (VALID):
 - Estrutura do padrão preservada
 - Preço respeitando suportes/resistências chave
 - Sem reversão clara contra a posição
+- **PULLBACKS SÃO NORMAIS:** Correções pequenas contra a tendência NÃO invalidam o padrão.
+- Só invalide se houver quebra estrutural CLARA (ex: rompimento forte de suporte no Long).
 
 CRITÉRIOS PARA FECHAR (INVALID):
 - Padrão claramente desconfigurado
-- Quebra de estrutura contra a posição
-- Reversão confirmada no price action
+- Quebra de estrutura contra a posição com volume
+- Reversão confirmada no price action (não apenas ruído)
 
-Seja PRECISO. Só invalide se houver evidência CLARA no gráfico.
+Seja TOLERANTE com ruídos de mercado. Só invalide se a tese do trade estiver morta.
 
 Responda ESTRITAMENTE neste formato JSON:
 {{
@@ -247,7 +244,7 @@ Responda ESTRITAMENTE neste formato JSON:
             response_text = result.text.replace('```json', '').replace('```', '').strip()
             parsed = json.loads(response_text)
 
-            # Reset contador de falhas consecutivas
+            # Reset contador de falhas consecutivas API
             self.consecutive_api_failures = 0
 
             return parsed
@@ -333,42 +330,52 @@ Responda ESTRITAMENTE neste formato JSON:
                 f"{verdict} ({confidence:.2f}) | {reasoning}"
             )
 
-            if verdict == 'INVALID' and confidence >= self.INVALID_CONFIDENCE_THRESHOLD:
-                # Padrão invalidado pela IA com confiança alta
-                exit_reason = (
-                    f"Vision AI: Padrão invalidado (conf: {confidence:.2f}). "
-                    f"{reasoning}"
-                )
+            if verdict == 'INVALID':
+                if confidence >= self.INVALID_CONFIDENCE_THRESHOLD:
+                    # Invalidação detectada com alta confiança
+                    self.consecutive_invalid_candles += 1
+                    
+                    if self.consecutive_invalid_candles < self.REQUIRED_INVALID_CANDLES:
+                        # Primeiro aviso
+                        logger.warning(f"⚠️ AVISO DE INVALIDAÇÃO #1: {self.symbol} ({confidence:.2f}). Aguardando confirmação no próximo candle.")
+                        return False, ""
+                    else:
+                        # Segundo candle consecutivo INVALID -> FECHAR
+                        exit_reason = (
+                            f"Vision AI: Padrão invalidado em 2 candles consecutivos (conf: {confidence:.2f}). "
+                            f"{reasoning}"
+                        )
 
-                # Alerta no Telegram
-                side_emoji = "📈" if self.side == 'buy' else "📉"
-                alert = (
-                    f"👁️ *VISION AI - POSIÇÃO FECHADA*\n\n"
-                    f"{side_emoji} *{self.symbol}* ({self.side.upper()})\n"
-                    f"Entry: `{self.entry_price}`\n"
-                    f"Padrão: {self.pattern_data.get('pattern_name', '?')}\n\n"
-                    f"❌ *Veredicto: INVALID* (conf: {confidence:.2f})\n"
-                    f"📝 {reasoning}\n\n"
-                    f"🔄 Validações realizadas: {self.validations_count}"
-                )
-                send_telegram_alert(alert)
+                        # Alerta no Telegram
+                        side_emoji = "📈" if self.side == 'buy' else "📉"
+                        alert = (
+                            f"👁️ *VISION AI - POSIÇÃO FECHADA*\n\n"
+                            f"{side_emoji} *{self.symbol}* ({self.side.upper()})\n"
+                            f"Entry: `{self.entry_price}`\n"
+                            f"Padrão: {self.pattern_data.get('pattern_name', '?')}\n\n"
+                            f"❌ *Veredicto: INVALID* (Confirmado 2x)\n"
+                            f"📝 {reasoning}\n\n"
+                            f"🔄 Validações realizadas: {self.validations_count}"
+                        )
+                        send_telegram_alert(alert)
 
-                # Limpar imagens antigas
-                self._cleanup_old_images()
+                        # Limpar imagens antigas
+                        self._cleanup_old_images()
 
-                return True, exit_reason
-
-            elif verdict == 'INVALID' and confidence < self.INVALID_CONFIDENCE_THRESHOLD:
-                # IA incerta - manter posição mas logar
-                logger.info(
-                    f"⚠️ IA acha INVALID mas com baixa confiança ({confidence:.2f}) - "
-                    f"mantendo posição. {reasoning}"
-                )
-                return False, ""
+                        return True, exit_reason
+                else:
+                    # IA incerta (INVALID mas confiança baixa) -> Resetar contador
+                    logger.info(
+                        f"⚠️ IA acha INVALID mas com baixa confiança ({confidence:.2f}) - "
+                        f"mantendo posição e resetando contador."
+                    )
+                    self.consecutive_invalid_candles = 0 # Reset para exigir 2 fortes seguidos
+                    return False, ""
 
             else:
                 # VALID - padrão continua
                 logger.info(f"✅ Padrão continua válido para {self.symbol} (conf: {confidence:.2f})")
+                self.consecutive_invalid_candles = 0 # Reset contador se voltar a ser VALID
                 return False, ""
 
         except Exception as e:
@@ -378,7 +385,5 @@ Responda ESTRITAMENTE neste formato JSON:
 
 # === TESTE ===
 if __name__ == "__main__":
-    print("PostEntryValidator v2 - Vision AI")
+    print("PostEntryValidator v2.3.1 - Vision AI Tolerante")
     print("Integrado no bot_executor.py via loop de monitoramento")
-    print(f"Gemini API: {'OK' if GOOGLE_API_KEY else 'NÃO CONFIGURADA'}")
-    print(f"Telegram: {'OK' if TELEGRAM_TOKEN else 'NÃO CONFIGURADO'}")

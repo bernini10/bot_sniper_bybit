@@ -1,23 +1,5 @@
 [
   {
-    "symbol": "LDO/USDT",
-    "side": "SHORT",
-    "entry_price": 0.3367,
-    "size": 120.5,
-    "risco_estimado": 1.513494177,
-    "opened_at": "2026-02-10 18:34:47.768358",
-    "status": "OPEN"
-  },
-  {
-    "symbol": "DOGE/USDT",
-    "side": "SHORT",
-    "entry_price": 0.09231,
-    "size": 244.0,
-    "risco_estimado": 1.500213932,
-    "opened_at": "2026-02-10 18:47:34.050795",
-    "status": "OPEN"
-  },
-  {
     "symbol": "NEAR/USDT",
     "side": "SHORT",
     "entry_price": 0.9824,
@@ -447,6 +429,24 @@
     "size": 2.9,
     "risco_estimado": 1.3123439495,
     "opened_at": "2026-02-14 01:14:08.565049",
+    "status": "OPEN"
+  },
+  {
+    "symbol": "EGLD/USDT",
+    "side": "SHORT",
+    "entry_price": 4.713,
+    "size": 2.48,
+    "risco_estimado": 0.6566539605,
+    "opened_at": "2026-02-17 01:43:12.506146",
+    "status": "OPEN"
+  },
+  {
+    "symbol": "GRT/USDT",
+    "side": "SHORT",
+    "entry_price": 0.028,
+    "size": 1125.8,
+    "risco_estimado": 0.6563326700000001,
+    "opened_at": "2026-02-17 03:12:12.232331",
     "status": "OPEN"
   }
 ]
